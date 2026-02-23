@@ -1,4 +1,4 @@
-#### SEIDR REPOSITORY
+## SEIDR
 ----------------------
 
 A smorgasbord of code for the Seidr concept - an instrument to perform photonic latnern fed kernel nulling at the VLTI.
@@ -6,7 +6,7 @@ A smorgasbord of code for the Seidr concept - an instrument to perform photonic 
 Kernel nuller code courtesy of Frantz Martinache (https://github.com/fmartinache/knuller-sim), and photonic lantern code courtesy of Barnaby Norris (unpublished).
 
 
-## Installation
+### Installation
 
 Code has been tested in a clean install in python 3.10
 To install all the required packages, run the following command in the terminal:
@@ -15,7 +15,7 @@ To install all the required packages, run the following command in the terminal:
 pip install -r requirements.txt
 ```
 
-## Citation
+### Citation
 
 If you found this code useful, please cite the following paper:
 
@@ -31,7 +31,7 @@ If you found this code useful, please cite the following paper:
 }
 ```
 
-## Structure
+### Structure
 
 ```
 seidr
@@ -87,18 +87,10 @@ seidr
 
 ```
 
-## Script Functions
+### Script Descriptions
 
 Script				 | Description											  |
 ---------------|---------------------------------------------------------------																
-main.py				 | Simulates examples of a nuller and a kernel nuller,    |
-					     | using planetary and telescope geometric information,   |
-					     | as well random amplitude/phase errors, as input.		  |
-...............................................................................
-planet_calcs.py 	 | Defines the functions needed to calculate explanet     |
-					 | separations and contrasts.							  |
-...............................................................................
-run_over_catalgue.py | Loads the Exoplanet Catalogue from PADC and calculates |
-					 | separations and contrasts, as well as error bars, for  |
-					 | for each exoplanet. Produces example of Figs. 1 and 5  |
-					 | from Taras et. al. 2024.  							  |
+main.py				 | Simulates examples of a nuller and a kernel nuller, using planetary and telescope geometric information, as well random amplitude/phase errors, as input.		  |
+planet_calcs.py 	 | Defines the functions needed to calculate explanet separations and contrasts.							  |
+run_over_catalgue.py | Loads the Exoplanet Catalogue from PADC and calculates separations and contrasts, as well as error bars, for for each exoplanet. Produces example of Figs. 1 and 5 from Taras et. al. 2024.  							  |
