@@ -3,12 +3,13 @@ import numpy as np
 import time
 import pyvo
 
-import planet_calcs
-
 import astropy.units as u
 import astropy.constants as c
 
 import matplotlib.pyplot as plt
+
+## Import Local Modules
+import planet_calcs
 
 
 #%% Import Planet Catalogue
@@ -88,7 +89,7 @@ sin_i_mask = np.array(sin_i_mask)
 sep_errors.shape, sin_i_mask.shape
 
 
-#%%
+#%% Check for Errors
 
 np.isnan(sep_errors).sum(axis=0), np.isnan(contrast_errors).sum(axis=0)
 has_errors = np.logical_and(
@@ -156,22 +157,33 @@ plt.axvline(
 plt.legend()
 plt.xlabel("Angular separation (milliarcseconds)")
 plt.ylabel("Contrast of thermal emission in H band")
-plt.savefig("contrast_vs_seperation.pdf")
+# plt.savefig("contrast_vs_seperation.pdf")
 
 
-# %%
+#%% Add Log10 Contrast to Pandas Table
 pandas_table["log10contrast"] = np.log10(pandas_table["contrast"])
 
 
-#%% Extract Achievable Planets
+#%% Extract Detectable Planets
 
-achievable = pandas_table[pandas_table["contrast"] > 5 * 10**-6]
+## Set Limits
+longest_baseline = 130 * u.m
+contrast_limit = 5 * 10**-6
+separation_limit = ((wavel / (2 * longest_baseline)) * u.rad).to(u.mas).value
+declination_limit = 20
+
+## Detectable constrasts
+achievable = pandas_table[pandas_table["contrast"] > contrast_limit]
+
+## Detectable seperations
 achievable = achievable[
-    achievable["seperation"]
-    > ((wavel / (2 * longest_baseline)) * u.rad).to(u.mas).value
+    achievable["seperation"] > separation_limit
 ]
-achievable = achievable[achievable["dec"] < 20]
 
+## Detectable declinations
+achievable = achievable[achievable["dec"] < declination_limit]
+
+## Store
 table = achievable[["target_name", "log10contrast", "seperation", "dec"]]
 print(
     table.sort_values("log10contrast", ascending=False).to_latex(
