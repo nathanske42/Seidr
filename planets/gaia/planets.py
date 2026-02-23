@@ -1,12 +1,16 @@
+#%%
 """
 Collection of functions for working with planets
 """
 
+#%% Import Libraries and Modules
 import astropy.units as u
 import astropy.constants as const
 import numpy as np
 
+#%% Define Functions
 
+##############################################################################
 def has_units(x):
     """
     Check if a variable has units
@@ -24,6 +28,7 @@ def has_units(x):
     return isinstance(x, u.quantity.Quantity)
 
 
+##############################################################################
 def reflected_contrast(
     planet_radius,
     planet_semimajor_axis,
@@ -33,7 +38,8 @@ def reflected_contrast(
     planet_semimajor_axis_units=u.AU,
 ):
     """
-    Computes the contrast of a planet based on its radius, semi-major axis, and albedo using reflected light
+    Computes the contrast of a planet based on its radius, semi-major axis, 
+    and albedo using reflected light
 
     Parameters
     ----------
@@ -44,8 +50,8 @@ def reflected_contrast(
     albedo : float
         The albedo of the planet, 0 <= albedo <= 1
     phase_contrast_factor : float
-        The phase contrast factor of the planet, 0 <= phase_contrast_factor <= 1. e.g. phase angle of 90 degrees
-        is 0.5
+        The phase contrast factor of the planet, 
+        0 <= phase_contrast_factor <= 1. e.g. phase angle of 90 degrees is 0.5
     planet_rad_units : Quantity
         The units of the planet radius, default is Jupiter radii
     planet_semimajor_axis_units : Quantity
@@ -59,14 +65,18 @@ def reflected_contrast(
     if not has_units(planet_radius):
         planet_radius = planet_radius * planet_rad_units
     if not has_units(planet_semimajor_axis):
-        planet_semimajor_axis = planet_semimajor_axis * planet_semimajor_axis_units
+        planet_semimajor_axis = planet_semimajor_axis \
+            * planet_semimajor_axis_units
 
     planet_area = np.pi * planet_radius**2
     light_shell_area = 4 * np.pi * planet_semimajor_axis**2
-    contrast_reflect = planet_area / light_shell_area * albedo * phase_contrast_factor
+    contrast_reflect = planet_area / light_shell_area \
+        * albedo * phase_contrast_factor
+
     return contrast_reflect
 
 
+##############################################################################
 def compute_angular_sep(
     semi_major_axis,
     distance_to_star,
@@ -97,9 +107,12 @@ def compute_angular_sep(
     if not has_units(distance_to_star):
         distance_to_star = distance_to_star * distance_units
 
-    return np.arctan((semi_major_axis) / (distance_to_star))
+    angular_separation = np.arctan((semi_major_axis) / (distance_to_star))
+
+    return angular_separation
 
 
+##############################################################################
 def period_to_axis(
     period,
     star_mass,
@@ -107,7 +120,8 @@ def period_to_axis(
     star_mass_units=u.M_sun,
 ):
     """
-    Find the semi-major axis of a planet given its period and the mass of the star
+    Find the semi-major axis of a planet given its period and the mass of 
+    the star
 
     Parameters
     ----------
@@ -125,9 +139,12 @@ def period_to_axis(
     if not has_units(star_mass):
         star_mass = star_mass * star_mass_units
 
-    return (const.G * star_mass * period**2 / (4 * np.pi**2)) ** (1 / 3)
+    semi_major_axis = (const.G * star_mass * period**2 / (4 * np.pi**2))**(1/3)
+
+    return semi_major_axis
 
 
+##############################################################################
 def axis_to_period(
     semi_major_axis,
     star_mass,
@@ -135,10 +152,15 @@ def axis_to_period(
     star_mass_units=u.M_sun,
 ):
     """
-    Find the period of a planet in days given its semi-major axis and the mass of the star
+    Find the period of a planet in days given its semi-major axis and the mass 
+    of the star
     """
     if not has_units(semi_major_axis):
         semi_major_axis = semi_major_axis * semi_major_axis_units
     if not has_units(star_mass):
         star_mass = star_mass * star_mass_units
-    return 2 * np.pi * np.sqrt((semi_major_axis) ** 3 / (const.G * star_mass))
+
+    planet_period = 2 * np.pi \
+        * np.sqrt((semi_major_axis) ** 3 / (const.G * star_mass))
+
+    return planet_period
