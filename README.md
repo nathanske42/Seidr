@@ -89,8 +89,10 @@ seidr
 
 ### Script Descriptions
 
+* re-organise code and update
+
 Script				 | Description											  |
 ---------------|---------------------------------------------------------------																
-main.py				 | Simulates examples of a nuller and a kernel nuller, using planetary and telescope geometric information, as well random amplitude/phase errors, as input.		  |
-planet_calcs.py 	 | Defines the functions needed to calculate explanet separations and contrasts.							  |
-run_over_catalgue.py | Loads the Exoplanet Catalogue from PADC and calculates separations and contrasts, as well as error bars, for for each exoplanet. Produces example of Figs. 1 and 5 from Taras et. al. 2024.  							  |
+```main.py```				 | Simulates examples of a nuller and a kernel nuller, using planetary and telescope geometric information, as well random amplitude/phase errors, as input.		  |
+```planet_calcs.py``` 	 | Defines the functions needed to calculate explanet separations and contrasts.							  |
+```run_over_catalgue.py``` | Loads the Exoplanet Catalogue from PADC and calculates separations and contrasts, as well as error bars, for for each exoplanet. Produces example of Figs. 1 and 5 from Taras et. al. 2024.  							  |
